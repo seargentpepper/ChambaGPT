@@ -1,4 +1,4 @@
-const CACHE_NAME = 'chambagpt-v1';
+const CACHE_NAME = 'chambagpt-v2';
 const urlsToCache = [
   './',
   './index.html',
@@ -7,7 +7,10 @@ const urlsToCache = [
   './utils.js',
   './data.js',
   './app.js',
+  './manifest.json',
   './assets/favicon.ico',
+  './assets/icon-192.png',
+  './assets/icon-512.png',
   'https://cdn.tailwindcss.com',
   'https://unpkg.com/lucide@latest',
   'https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap'
