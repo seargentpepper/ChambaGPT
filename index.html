@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChambaGPT: La Guía Amarilla</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <meta name="description"
+        content="ChambaGPT: La Guía Amarilla. El directorio definitivo para la supervivencia laboral, búsqueda de empleo y supervivencia corporativa.">
+    <meta name="keywords" content="ChambaGPT, Guía Amarilla, Empleo, Trabajo, Directorio, CV, IA, Reclutamiento">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.ico">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#FFD200">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="paper-grain"></div>
+    <div id="match-overlay"></div>
+
+    <!-- STICKERS ESTÁTICOS -->
+    <div class="static-sticker" style="top: 15%; left: 2%; transform: rotate(-10deg);">SIN VACANTES</div>
+    <div class="static-sticker" style="top: 40%; right: 3%; transform: rotate(15deg);">CUIDADO: RRHH</div>
+    <div class="static-sticker" style="bottom: 10%; left: 5%; transform: rotate(-5deg);">EXPLOTACIÓN 24/7</div>
+
+    <!-- HEADER -->
+    <header
+        class="relative z-50 border-b-4 border-black bg-yellow-400 p-3 md:p-6 flex flex-row items-center justify-between gap-2 md:gap-4 mobile-compact-header">
+        <div class="flex items-center gap-2 md:gap-4 w-full md:w-auto">
+            <div
+                class="logo-container w-10 h-10 md:w-16 md:h-16 bg-black rounded-full flex items-center justify-center border-2 md:border-4 border-white flex-shrink-0">
+                <i data-lucide="skull" class="w-6 h-6 md:w-10 md:h-10 text-yellow-400"></i>
+            </div>
+            <div class="header-titles flex-1">
+                <h1 class="text-2xl leading-none md:text-6xl font-black tracking-tighter uppercase">Chamba<span
+                        class="neon-blink">GPT</span></h1>
+                <p class="text-[10px] md:text-lg font-black italic tracking-[0.1em] uppercase leading-tight">La Guía
+                    Amarilla</p>
+                <p
+                    class="text-[8px] md:text-sm font-bold italic tracking-[0.1em] md:tracking-[0.2em] opacity-80 leading-none">
+                    DIRECTORIO DE LA DESESPERACIÓN PROFESIONAL</p>
+            </div>
+        </div>
+        <div class="text-right flex-shrink-0 timer-container flex flex-col justify-center">
+            <div class="text-[8px] md:text-xs font-black uppercase text-black">ACTUALIZACIÓN</div>
+            <div id="live-clock" class="text-[10px] md:text-2xl font-black tabular-nums text-red-600 md:text-black">HOY
+                MISMO</div>
+        </div>
+    </header>
+
+    <!-- NAV -->
+    <nav class="sticky top-0 z-50 border-b-4 border-black flex overflow-x-auto mobile-glass-nav glass-nav">
+        <button id="btn-directory" onclick="switchTab('directory')"
+            class="nav-tab active flex-1 min-w-[max-content] md:min-w-[120px] px-3 py-2 md:py-4 text-xs md:text-base font-black uppercase border-r-2 border-black whitespace-nowrap">
+            <i data-lucide="book" class="inline w-3 h-3 md:w-4 md:h-4 mr-1"></i> Directorio
+        </button>
+        <button id="btn-tinder" onclick="switchTab('tinder')"
+            class="nav-tab flex-1 min-w-[max-content] md:min-w-[120px] px-3 py-2 md:py-4 text-xs md:text-base font-black uppercase border-r-2 border-black whitespace-nowrap">
+            <i data-lucide="heart-off" class="inline w-3 h-3 md:w-4 md:h-4 mr-1"></i> Tinder Job
+        </button>
+        <button id="btn-pins" onclick="switchTab('pins')"
+            class="nav-tab flex-1 min-w-[max-content] md:min-w-[120px] px-3 py-2 md:py-4 text-xs md:text-base font-black uppercase border-r-2 border-black whitespace-nowrap">
+            <i data-lucide="layout-grid" class="inline w-3 h-3 md:w-4 md:h-4 mr-1"></i> Pins Ansiedad
+        </button>
+        <button id="btn-cv" onclick="switchTab('cv')"
+            class="nav-tab flex-1 min-w-[max-content] md:min-w-[120px] px-3 py-2 md:py-4 text-xs md:text-base font-black uppercase bg-yellow-100 hover:bg-yellow-200 whitespace-nowrap">
+            <i data-lucide="sparkles" class="inline w-3 h-3 md:w-4 md:h-4 mr-1"></i> Curri-Vit-AI
+        </button>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8 relative z-10">
+
+        <!-- VISTA: DIRECTORIO -->
+        <section id="view-directory" class="space-y-8">
+            <!-- Top Filters -->
+            <div class="flex justify-center flex-wrap gap-2">
+
+                <button onclick="filterDir('bolsa')"
+                    class="cat-btn bg-white border-2 border-black px-4 py-2 rounded-full text-sm font-bold uppercase hover:scale-105 transition-transform text-black">Bolsas
+                    de trabajo</button>
+                <button onclick="filterDir('brand')"
+                    class="cat-btn bg-white border-2 border-black px-4 py-2 rounded-full text-sm font-bold uppercase hover:scale-105 transition-transform text-black">Conectar
+                    a las marcas</button>
+                <button onclick="filterDir('mentoring')"
+                    class="cat-btn bg-white border-2 border-black px-4 py-2 rounded-full text-sm font-bold uppercase hover:scale-105 transition-transform text-black">Mentoring</button>
+                <button onclick="filterDir('network')"
+                    class="cat-btn bg-white border-2 border-black px-4 py-2 rounded-full text-sm font-bold uppercase hover:scale-105 transition-transform text-black">Network</button>
+            </div>
+
+            <div class="flex flex-col-reverse lg:flex-row gap-8 items-start w-full">
+                <!-- Main Grid -->
+                <div id="grid-directory" class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+                    <!-- JS Injected -->
+                </div>
+
+                <!-- Bolsas Sidebar (Hidden by default) -->
+                <aside id="bolsa-sidebar"
+                    class="hidden w-full lg:w-80 flex-none bg-yellow-50 p-6 border-4 border-black shadow-[8px_8px_0px_black] rounded-xl sticky top-24 max-h-[85vh] overflow-y-auto custom-scrollbar transition-all duration-300">
+                    <div
+                        class="flex justify-between items-center border-b-4 border-black pb-4 mb-4 lg:block lg:text-center">
+                        <div class="cursor-pointer lg:cursor-default" onclick="toggleSidebar()">
+                            <h3 class="font-black uppercase text-xl md:text-3xl">Bolsó-metro</h3>
+                            <p class="text-[8px] md:text-[10px] font-bold italic">Nivel de sufrimiento esperado</p>
+                        </div>
+                        <button onclick="toggleSidebar()"
+                            class="lg:hidden bg-black text-white p-2 rounded-lg border-2 border-white shadow-[2px_2px_0px_gray] active:translate-y-1 active:shadow-none transition-all">
+                            <i data-lucide="chevron-down" id="sidebar-icon" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <div id="sidebar-collapsible" class="hidden lg:block space-y-6">
+                        <div class="space-y-4">
+                            <!-- ORO PURO -->
+                            <div onclick="filterBolsaSub('oro')"
+                                class="cursor-pointer group hover:bg-white p-2 rounded-lg transition-all border-2 border-transparent hover:border-black">
+                                <h4
+                                    class="font-black uppercase text-sm flex items-center gap-2 group-hover:text-yellow-600 transition-colors">
+                                    <span class="bg-black text-yellow-400 p-1 rounded">🥇</span> ORO PURO
+                                </h4>
+                                <p class="text-xs font-bold mt-1 text-slate-500">Calidad de Curaduría</p>
+                                <p class="text-xs leading-tight mt-1 border-l-4 border-yellow-400 pl-2 opacity-80">
+                                    <strong>Criterio:</strong> ¿Hay un humano revisando? Sitios con "Ruido Cero". Si
+                                    aplicas, sabes que la empresa existe y no es una estafa piramidal.
+                                </p>
+                            </div>
+
+                            <!-- VIBE TECH -->
+                            <div onclick="filterBolsaSub('vibetech')"
+                                class="cursor-pointer group hover:bg-white p-2 rounded-lg transition-all border-2 border-transparent hover:border-black">
+                                <h4
+                                    class="font-black uppercase text-sm flex items-center gap-2 group-hover:text-indigo-600 transition-colors">
+                                    <span class="bg-black text-white p-1 rounded">🥈</span> VIBE TECH
+                                </h4>
+                                <p class="text-xs font-bold mt-1 text-slate-500">Prestigio y Remoto Real</p>
+                                <p class="text-xs leading-tight mt-1 border-l-4 border-indigo-600 pl-2 opacity-80">
+                                    <strong>Criterio:</strong> Para el 1% de la fuerza laboral. Infraestructura legal y
+                                    global. Aquí no tienes que explicarle a nadie qué es Slack.
+                                </p>
+                            </div>
+
+                            <!-- SUERTE WEY -->
+                            <div onclick="filterBolsaSub('suerte')"
+                                class="cursor-pointer group hover:bg-white p-2 rounded-lg transition-all border-2 border-transparent hover:border-black">
+                                <h4
+                                    class="font-black uppercase text-sm flex items-center gap-2 group-hover:text-green-600 transition-colors">
+                                    <span class="bg-black text-white p-1 rounded">🥉</span> SUERTE, WEY
+                                </h4>
+                                <p class="text-xs font-bold mt-1 text-slate-500">Específicos pero Caóticos</p>
+                                <p class="text-xs leading-tight mt-1 border-l-4 border-green-600 pl-2 opacity-80">
+                                    <strong>Criterio:</strong> Nicho o Match. Es como Tinder: la vacante puede ser
+                                    genial,
+                                    pero dependes de un algoritmo o de que no te ghosteen.
+                                </p>
+                            </div>
+
+                            <!-- GHOSTING PRO -->
+                            <div onclick="filterBolsaSub('ghost')"
+                                class="cursor-pointer group hover:bg-white p-2 rounded-lg transition-all border-2 border-transparent hover:border-black">
+                                <h4
+                                    class="font-black uppercase text-sm flex items-center gap-2 group-hover:text-purple-600 transition-colors">
+                                    <span class="bg-black text-white p-1 rounded">💀</span> GHOSTING PRO
+                                </h4>
+                                <p class="text-xs font-bold mt-1 text-slate-500">Agregadores de Volumen</p>
+                                <p class="text-xs leading-tight mt-1 border-l-4 border-purple-600 pl-2 opacity-80">
+                                    <strong>Criterio:</strong> Efecto Agujero Negro. Tu CV compite contra 5,000 bots.
+                                    Pasa
+                                    por 3 filtros antes de que un humano lo huela.
+                                </p>
+                            </div>
+
+                            <!-- EL SÓTANO -->
+                            <div onclick="filterBolsaSub('sótano')"
+                                class="cursor-pointer group hover:bg-white p-2 rounded-lg transition-all border-2 border-transparent hover:border-black">
+                                <h4
+                                    class="font-black uppercase text-sm flex items-center gap-2 group-hover:text-red-600 transition-colors">
+                                    <span class="bg-black text-white p-1 rounded">🚩</span> EL SÓTANO
+                                </h4>
+                                <p class="text-xs font-bold mt-1 text-slate-500">Realidad Local y Explotación</p>
+                                <p class="text-xs leading-tight mt-1 border-l-4 border-red-600 pl-2 opacity-80">
+                                    <strong>Criterio:</strong> Precariedad. Sueldos bajos, prestaciones "a medias" y
+                                    vacantes que piden "disponibilidad de horario".
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="text-center pt-4 border-t-2 border-dashed border-black">
+                            <button onclick="filterDir('bolsa')"
+                                class="text-xs font-bold underline uppercase hover:text-red-500">Ver todas las
+                                bolsas</button>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- VISTA: TINDER JOB -->
+        <section id="view-tinder" class="hidden flex flex-col items-center">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-black uppercase">¿Match o Despido?</h2>
+                <p class="text-sm font-bold italic">Derecha para abrir el portal, izquierda para ignorar tu destino.</p>
+            </div>
+
+            <div id="tinder-stack" class="tinder-stack mb-10">
+                <!-- Se llena con JS -->
+            </div>
+
+            <div class="flex gap-4">
+                <button onclick="handleSwipe('left')"
+                    class="bg-red-500 text-white w-16 h-16 rounded-full border-4 border-black flex items-center justify-center shadow-[4px_4px_0px_black] active:shadow-none active:translate-x-1 active:translate-y-1 transition-all">
+                    <i data-lucide="x" class="w-8 h-8"></i>
+                </button>
+                <button onclick="handleSwipe('right')"
+                    class="bg-green-500 text-white w-16 h-16 rounded-full border-4 border-black flex items-center justify-center shadow-[4px_4px_0px_black] active:shadow-none active:translate-x-1 active:translate-y-1 transition-all">
+                    <i data-lucide="heart" class="w-8 h-8"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- VISTA: PINS ANSIEDAD (CARRUSEL) -->
+        <section id="view-pins" class="hidden">
+            <div class="text-center mb-6">
+                <h2 class="text-4xl font-black uppercase">PINS DE ANSIEDAD</h2>
+                <p class="text-sm font-bold italic">Artículos que necesitas leer para no perder la cordura (del todo).
+                </p>
+                <div
+                    class="mt-4 bg-yellow-100 border-2 border-black p-3 text-xs md:text-sm font-bold mx-auto max-w-lg rounded-lg shadow-[4px_4px_0px_black] transform rotate-1">
+                    <span class="bg-black text-white px-1">⚠️ AVISO:</span> La sabiduría de The Muse está en inglés
+                    puro.
+                    <br>Usa el <span class="underline">Traductor integrado de tu Navegador</span> (Menú &gt; Traducir)
+                    para leerlos en español.
+                </div>
+            </div>
+
+            <!-- Carousel Container -->
+            <div id="pins-carousel" class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 px-4 w-full">
+                <!-- Se llena con JS -->
+            </div>
+
+            <div class="text-center text-[10px] font-bold uppercase opacity-50 animate-pulse">
+                ← DESLIZA PARA LEER MÁS →
+            </div>
+        </section>
+
+        <!-- VISTA: Curri-Vit-AI -->
+        <section id="view-cv" class="hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl md:text-5xl font-black uppercase mb-2">MI <span
+                        class="bg-black text-white px-2">CURRI-VIT-AI</span></h2>
+                <p class="text-sm font-bold italic">Deja de sufrir redactando. Roba este prompt y pégalo en ChatGPT.</p>
+            </div>
+
+            <div class="max-w-2xl mx-auto bg-white border-4 border-black p-6 rounded-xl shadow-[8px_8px_0px_black]">
+                <div class="mb-6">
+                    <label class="block font-black uppercase text-xs mb-2 tracking-widest">Puesto o Habilidad
+                        Principal</label>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input type="text" id="role-input"
+                            placeholder="Ej. Project Manager, Diseñador UX, Java Developer..."
+                            class="flex-1 border-2 border-black p-3 font-bold uppercase focus:outline-none focus:bg-yellow-50 text-sm">
+                        <button onclick="generatePrompt()"
+                            class="bg-black text-yellow-400 font-black px-6 py-3 uppercase border-2 border-black hover:bg-yellow-400 hover:text-black hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none shadow-[4px_4px_0px_gray] transition-all text-sm">
+                            GENERAR PROMPT
+                        </button>
+                    </div>
+                </div>
+
+                <div id="prompt-output" class="hidden border-t-2 border-dashed border-black pt-6 animate-pulse">
+                    <label class="block font-black uppercase text-xs mb-2 tracking-widest text-blue-600">✨ TU PROMPT
+                        MAESTRO (CÓPIALO):</label>
+                    <div class="bg-slate-100 border-2 border-black p-4 relative group">
+                        <p id="prompt-text" class="font-mono text-xs md:text-sm leading-relaxed whitespace-pre-line">
+                        </p>
+                        <button onclick="copyToClipboard()"
+                            class="absolute top-2 right-2 bg-white border border-black px-2 py-1 text-[10px] font-bold uppercase hover:bg-green-200 transition-colors">
+                            COPIAR
+                        </button>
+                    </div>
+                    <p class="text-xs font-bold mt-2 text-center opacity-50 uppercase">⚠️ Pega esto en ChatGPT/Claude y
+                        reemplaza los [CORCHETES] con tu info.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-black text-yellow-400 p-8 mt-20 border-t-4 border-yellow-400">
+        <div class="container mx-auto text-center space-y-2">
+            <p class="text-xs font-black uppercase tracking-widest">CHAMBAGPT: LA GUÍA AMARILLA © 2026 • TODOS LOS
+                DERECHOS EXPLOTADOS
+            </p>
+            <p class="text-[10px] italic opacity-70">Nota: Buscar trabajo es un deporte de contacto. No nos hacemos
+                responsables de crisis de pánico.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts (Data, Config & Logic) -->
+    <script src="constants.js"></script>
+    <script src="utils.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').then(registration => {
+                    console.log('SW registered.');
+                }).catch(err => {
+                    console.log('SW registration failed: ', err);
+                });
+            });
+        }
+
+        function updateUptime() {
+            const clockEl = document.getElementById('live-clock');
+            if (clockEl) {
+                // Obtenemos una fecha estática desde la que medimos (se puede cambiar al último deploy real)
+                const lastUpdated = new Date("2026-02-22T10:00:00Z");
+                const now = new Date();
+                const diffTime = Math.abs(now - lastUpdated);
+                const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+                const diffDays = Math.floor(diffHours / 24);
+
+                if (diffDays > 0) {
+                    clockEl.textContent = `HACE ${diffDays} DÍA${diffDays > 1 ? 'S' : ''}`;
+                } else {
+                    clockEl.textContent = `HACE ${diffHours} HORA${diffHours !== 1 ? 'S' : ''}`;
+                }
+            }
+        }
+        updateUptime();
+    </script>
+</body>
+
+</html>

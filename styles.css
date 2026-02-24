@@ -1,0 +1,373 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --yellow-main: #FFD200;
+    --yellow-paper: #FFFDE7;
+    --ink-black: #121212;
+    --neon-red: #ff3131;
+    --neon-blue: #00d2ff;
+}
+
+body {
+    font-family: 'Fredoka', sans-serif;
+    background-color: var(--yellow-paper);
+    color: var(--ink-black);
+    overflow-x: hidden;
+    background-image: radial-gradient(var(--yellow-main) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.paper-grain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.12;
+    background-image: url('https://www.transparenttextures.com/patterns/p6-dark.png');
+    z-index: 100;
+    animation: grainShift 8s steps(10) infinite;
+}
+
+@keyframes grainShift {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    10% {
+        transform: translate(-5%, -10%);
+    }
+
+    30% {
+        transform: translate(3%, -15%);
+    }
+
+    50% {
+        transform: translate(12%, 9%);
+    }
+
+    70% {
+        transform: translate(9%, 4%);
+    }
+
+    90% {
+        transform: translate(-1%, 7%);
+    }
+}
+
+/* Neon Blink effect */
+@keyframes blink {
+
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+        opacity: 1;
+        text-shadow: 0 0 10px var(--neon-red);
+    }
+
+    20%,
+    24%,
+    55% {
+        opacity: 0.4;
+        text-shadow: none;
+    }
+}
+
+.neon-blink {
+    animation: blink 3s infinite;
+    color: var(--neon-red);
+}
+
+/* Estáticos pero flotantes (sin parallax de mouse) */
+.static-sticker {
+    position: fixed;
+    background: white;
+    border: 3px solid var(--ink-black);
+    padding: 5px 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 1);
+    z-index: 5;
+    pointer-events: none;
+    font-size: 14px;
+}
+
+/* Tinder Swipe Logic */
+.tinder-stack {
+    position: relative;
+    height: 55vh;
+    min-height: 480px;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.tinder-card {
+    position: absolute;
+    inset: 0;
+    background: white;
+    border: 4px solid var(--ink-black);
+    box-shadow: 8px 8px 0px var(--ink-black);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s;
+    display: flex;
+    flex-direction: column;
+}
+
+.swipe-left {
+    transform: translateX(-200%) rotate(-30deg) !important;
+    opacity: 0;
+}
+
+.swipe-right {
+    transform: translateX(200%) rotate(30deg) !important;
+    opacity: 0;
+}
+
+/* Match Flash */
+#match-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--neon-blue);
+    z-index: 200;
+    display: none;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Pins de Ansiedad Style */
+.pin-card {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.pin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.nav-tab.active {
+    background: var(--yellow-main);
+    box-shadow: inset 0 -4px 0 var(--ink-black);
+}
+
+.category-tag {
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--yellow-paper);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--ink-black);
+}
+
+/* Optimization for short screens (e.g. 1300x600) */
+@media (max-height: 700px) {
+    header {
+        padding: 0.75rem 1.5rem !important;
+    }
+
+    header .w-16.h-16 {
+        width: 3.5rem !important;
+        height: 3.5rem !important;
+    }
+
+    header .w-10.h-10 {
+        width: 2rem !important;
+        height: 2rem !important;
+    }
+
+    header h1 {
+        font-size: 2.25rem !important;
+        line-height: 1 !important;
+    }
+
+    header p,
+    header .text-\[10px\] {
+        font-size: 0.9rem !important;
+    }
+
+    header .text-2xl {
+        font-size: 1.5rem !important;
+    }
+
+    .nav-tab {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+        font-size: 0.9rem !important;
+    }
+
+    main {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+    }
+
+    .tinder-stack {
+        height: 60vh !important;
+        min-height: 400px !important;
+        max-width: 300px !important;
+    }
+
+    .tinder-card {
+        padding: 1rem !important;
+    }
+
+    .tinder-card h3 {
+        font-size: 1.25rem !important;
+    }
+
+    .tinder-card p {
+        font-size: 1rem !important;
+        line-height: 1.4 !important;
+    }
+
+    #bolsa-sidebar {
+        max-height: 75vh !important;
+        padding: 1rem !important;
+    }
+
+    #bolsa-sidebar h3 {
+        font-size: 1.5rem !important;
+    }
+
+    .static-sticker {
+        font-size: 12px !important;
+        padding: 4px 10px !important;
+    }
+
+    #view-cv h2 {
+        font-size: 2.5rem !important;
+    }
+}
+
+/* Improved legibility for Fredoka */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.01em;
+}
+
+p {
+    line-height: 1.5;
+}
+
+/* ----- MOBILE REAL UX (Chips, Touch, Glassmorphism) ----- */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Glassmorphism nav for mobile */
+.glass-nav {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Chips / Botones */
+.cat-btn {
+    touch-action: manipulation;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s, box-shadow 0.2s;
+}
+
+@media (hover: hover) {
+    .cat-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 2px 2px 0px black;
+        background-color: var(--yellow-main);
+    }
+}
+
+.cat-btn:active {
+    transform: scale(0.95) !important;
+    box-shadow: none !important;
+    background-color: var(--yellow-main);
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+    .mobile-compact-header {
+        padding: 0.5rem 1rem !important;
+    }
+
+    .mobile-glass-nav .nav-tab {
+        background: transparent;
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+        font-size: 0.75rem !important;
+        border: none !important;
+        border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .mobile-glass-nav {
+        border-bottom: 2px solid black;
+    }
+
+    .mobile-glass-nav .nav-tab.active {
+        background: rgba(255, 210, 0, 0.8) !important;
+        box-shadow: inset 0 -3px 0 var(--ink-black) !important;
+        border-radius: 8px 8px 0 0;
+    }
+
+    /* Chips Mobile */
+    .cat-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+        flex: 1 1 auto;
+        text-align: center;
+    }
+
+    /* Glassmorphism for sidebar on mobile */
+    #bolsa-sidebar {
+        background: rgba(255, 253, 231, 0.8) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        transition: transform 0.3s ease, opacity 0.3s ease !important;
+    }
+}
+
+/* ----- PERFORMANCE ZERO-REGRET (Async Cards) ----- */
+.card-animate {
+    opacity: 0;
+    transform: translateY(20px);
+    /* Liberando el hilo principal con will-change para capas compuestas */
+    will-change: opacity, transform;
+    /* El delay dinámico para Batching (efecto cascada) */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition-delay: calc(var(--index, 0) * 30ms);
+}
+
+.card-animate.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Retomamos el hover con hardware acceleration luego de ser visible */
+@media (hover: hover) {
+    .card-animate.visible:hover {
+        transform: translate(-4px, -4px);
+        transition-delay: 0ms !important;
+    }
+}
